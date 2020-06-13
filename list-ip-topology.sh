@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/bash
 # ----------------------------------------------------------------------------
 #
 # Script:   	Copy ssh key to topology group
@@ -66,35 +66,7 @@ function SEND_EMAIL
  }
 
 
-# ----------------------------------------------------------------------------
-# function FINISH - use sendmail to email report
-# ----------------------------------------------------------------------------
 
-function FINISH
-{
-
- case $ERROR_FLAG in
-    0)
-  		      echo "*** Exiting $0 `date` [process ID: $$] ***\n" | tee -ai ${LOG}
-   	 SUBJECT=$SUCCESS_SUBJECT
-   	 SEND_EMAIL
-   	 exit
-    ;;
-    99)
-        	echo "*** Warning $0 `date` [process ID: $$] ***\n" | tee -ai ${LOG}
-   	 SUBJECT=$WARNING_SUBJECT
-   	 SEND_EMAIL
-    ;;
-    
-    *)
-   		 echo "*** Exiting $0 `date` [process ID: $$] ***\n" | tee -ai ${LOG}
-   	 SUBJECT=$ERROR_SUBJECT
-   	 SEND_EMAIL
-   	 exit
-    ;;
- esac
-    
-}
 
 # ----------------------------------------------------------------------------
 # If USER_ID is set verify the the script is running as specified user

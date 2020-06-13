@@ -33,41 +33,8 @@ ERROR_FLAG=0
 USER_ID=""  	#Set if script has to run as particular user
 LOG=        	#User for summary log, contents of this file will me mailed.
 # Declare mailprog specific variables
-FROM="root@$HOSTNAME"
-SENDMAIL="/usr/lib/sendmail -t"
-MESSAGE="This email contains the results of .........."
-SUCCESS_SUBJECT="INFO ONLY - ............ `date`"
-ERROR_SUBJECT="ERROR - ................  `date`"
-WARNING_SUBJECT="WARNING - ............. `date`"	#Optional, custom error code 99 will be treated as warning message
-TO="vettom@adobe.com"
 
 
-# ----------------------------------------------------------------------------
-# Default functions. Avoid modifying this section
-# ----------------------------------------------------------------------------
-
-# ----------------------------------------------------------------------------
-# Function to send E-mail. Called by FINISH, can be used for other mails by setting variables
-# ----------------------------------------------------------------------------
-
-function SEND_EMAIL
-{
-    	# email report to recipients
-    	(
-            	print "To: ${TO} "
-            	print "From: ${FROM} "
-            	print "Subject: ${SUBJECT} "
-            	print ""
-            	print "${MESSAGE}"
-            	print ""
-            	print "`cat ${LOG}`"
-    	) | ${SENDMAIL}
- }
-
-
-# ----------------------------------------------------------------------------
-# function FINISH - use sendmail to email report
-# ----------------------------------------------------------------------------
 
 function FINISH
 {

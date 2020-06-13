@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/bash
 # ----------------------------------------------------------------------------
 #
 # Script:  This script will use default AWS credentials and Generate SCV file for each server in each topology and region.
