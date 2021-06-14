@@ -165,7 +165,7 @@ do
  IP=""
  echo "Processing servers in $REGION"
 	#Start loop of IP
-	for IP in `aws ec2 describe-instances --region=$REGION --filters "Name=tag:adobe:ms:topology,Values=$TOPOLOGY" --query 'Reservations[].Instances[].[PublicIpAddress]' --output text`
+	for IP in `aws ec2 describe-instances --region=$REGION --filters "Name=tag:vettom:ms:topology,Values=$TOPOLOGY" --query 'Reservations[].Instances[].[PublicIpAddress]' --output text`
 	do
 	 if  [ ! -z $IP ] 
 	 then

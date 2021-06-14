@@ -143,6 +143,6 @@ fi
 for REGION in `aws ec2 describe-regions | awk '{ print $3 }'`
 do
 #Print IP and Hostnames
-aws ec2 describe-instances --region=$REGION --filters "Name=tag:adobe:ms:topology,Values=$TOPOLOGY" --query 'Reservations[].Instances[].[PublicIpAddress,InstanceId,Tags[?Key==`Name`].Value[]]' --output text | sed '$!N;s/\n/ /'
+aws ec2 describe-instances --region=$REGION --filters "Name=tag:vettom:ms:topology,Values=$TOPOLOGY" --query 'Reservations[].Instances[].[PublicIpAddress,InstanceId,Tags[?Key==`Name`].Value[]]' --output text | sed '$!N;s/\n/ /'
 
 done

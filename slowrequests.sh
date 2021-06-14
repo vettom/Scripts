@@ -65,7 +65,7 @@ echo ""
 echo -e "  \e[1;32m  INFO : Using ${Requestlog} \e[0m "
 echo -e "  \e[1;32m  INFO : To use custom request log file pass it as argument with path. \e[0m "
 cat <<EOF > $JavaFile
-//package com.adobe.ams;
+//package com.vettom.ams;
 
 
 import java.io.BufferedReader;

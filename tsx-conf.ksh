@@ -35,37 +35,6 @@ ERROR_FLAG=0
 USER_ID=""  	#Set if script has to run as particular user
 LOG=        	#User for summary log, contents of this file will me mailed.
 # Declare mailprog specific variables
-FROM="root@$HOSTNAME"
-SENDMAIL="/usr/lib/sendmail -t"
-MESSAGE="This email contains the results of .........."
-SUCCESS_SUBJECT="INFO ONLY - ............ `date`"
-ERROR_SUBJECT="ERROR - ................  `date`"
-WARNING_SUBJECT="WARNING - ............. `date`"	#Optional, custom error code 99 will be treated as warning message
-TO="vettom@adobe.com"
-
-
-# ----------------------------------------------------------------------------
-# Default functions. Avoid modifying this section
-# ----------------------------------------------------------------------------
-
-# ----------------------------------------------------------------------------
-# Function to send E-mail. Called by FINISH, can be used for other mails by setting variables
-# ----------------------------------------------------------------------------
-
-function SEND_EMAIL
-{
-    	# email report to recipients
-    	(
-            	print "To: ${TO} "
-            	print "From: ${FROM} "
-            	print "Subject: ${SUBJECT} "
-            	print ""
-            	print "${MESSAGE}"
-            	print ""
-            	print "`cat ${LOG}`"
-    	) | ${SENDMAIL}
- }
-
 
 # ----------------------------------------------------------------------------
 # function FINISH - use sendmail to email report
@@ -171,7 +140,7 @@ do
 	[[ -f /tmp/$REGION.TOPOLOGY.txt ]] && rm /tmp/$REGION.TOPOLOGY.txt
 	echo "Processing $REGION"
 
-	aws ec2 describe-instances --region=$REGION --filters "Name=tag:adobe:ms:topology,Values=*" --query 'Reservations[].Instances[].[Tags[?Key==`adobe:ms:topology`].Value[]]' --output text | sort | uniq  | tee -ai /tmp/$REGION.TOPOLOGY.txt
+	aws ec2 describe-instances --region=$REGION --filters "Name=tag:vettom:ms:topology,Values=*" --query 'Reservations[].Instances[].[Tags[?Key==`vettom:ms:topology`].Value[]]' --output text | sort | uniq  | tee -ai /tmp/$REGION.TOPOLOGY.txt
 
  #Now Generate CSV files for each Topologies
  TOPOLOGY=""
@@ -180,7 +149,7 @@ do
 	if [ ! -z $TOPOLOGY ]
 	then
 		echo "Generating list for $REGION and $TOPOLOGY"
-		aws ec2 describe-instances --region=$REGION --filters "Name=tag:adobe:ms:topology,Values=$TOPOLOGY" \
+		aws ec2 describe-instances --region=$REGION --filters "Name=tag:vettom:ms:topology,Values=$TOPOLOGY" \
 		--query 'Reservations[].Instances[].[PublicIpAddress,Tags[?Key==`Name`].Value[]]' --output text \
 		| sed '$!N;s/\n/ /' | awk  '{print "'$TOPOLOGY';"$1";"$2}' | tee -ai /tmp/TSX_all_Topologies.csv
 	fi
